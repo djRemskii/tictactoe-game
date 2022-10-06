@@ -14,6 +14,7 @@ bool checkWin();
 bool checkTie();
 void displayBoard();
 char getSymbol();
+void askRestart();
 
 bool playerTurn();
 void computerTurn();
@@ -27,25 +28,24 @@ int main(){
 
 
     //prompt user for game they wish to play (vs human or vs computer)
-    printf("Please choose the type of game (input number):\n\t1 - vs human\n\t2 - vs computer\n");
+    printf("Please choose the type of game (input number):\n\t1 - human vs human\n\t2 - human vs computer\n\t3 - computer vs computer\n");
 
     int gameType;
     scanf("%d", &gameType);
     if (gameType == 2){
         vsComputer = true;
+    } else if (gameType == 3){
+        while (!gameOver){
+            computerTurn(1);
+            checkWin(1);
+            checkTie();
+            if (!gameOver){
+                computerTurn(2);
+                checkWin(2);
+                checkTie();
+            }
+        }
     }
-
-    /*
-    for (int i=0; i<100; i++){
-        int row = (rand() %(3));
-        int column = (rand() %(3));
-        printf("%d %d\n",row,column);
-    }
-    */
-        
-
-    //putchar(gameType);
-
     
     //need while loop for game working
     while (!gameOver){
@@ -53,34 +53,34 @@ int main(){
         checkWin(1);
         checkTie();
         if (vsComputer && !gameOver){
-            //printf("Computer has placed a piece.\n");
             computerTurn(2);
             checkWin(2);
             checkTie();
         } else if (!gameOver){
-            printf("PLAYER 2 TURN\n");
             playerTurn(2);
             checkWin(2);
             checkTie();
         }
 
     }
-    
 
-    
-    
-
-    
-
-    /* functions needed:
-        1. spot select
-        2. check win
-        3. reset
-        4. display board
-    */
-
+    askRestart();
 
     return 0;
+}
+
+void askRestart(){
+    printf("Play again? (y/n)\n");
+        char restart;
+        scanf(" %c", &restart);
+
+        if(restart == 'y'){
+            main();
+        } else if (restart == 'n') {
+            
+        } else {
+            askRestart();
+        }
 }
 
 void reset (){
@@ -132,9 +132,9 @@ char getSymbol(int player){
 }
 
 bool playerTurn(int player){
+    displayBoard();
     printf("Player %d", player);
     printf(", please choose where to place your piece. (row 1-3, column 1-3)\n");
-        displayBoard();
         int row;
         int column;
         scanf("%d", &row);
@@ -143,9 +143,9 @@ bool playerTurn(int player){
 }
 
 void computerTurn(int player){
+    displayBoard();
     bool validMove = false;
     while (!validMove){
-        printf("computerattempt\n");
         int row = (rand() %(3));
         int column = (rand() %(3));
         if (grid[row][column] == 0){
@@ -153,9 +153,6 @@ void computerTurn(int player){
             printf("Computer has placed a piece.\n");
             validMove = true;
         }
-    }
-    if (!gameOver){
-        displayBoard();
     }
 }
 
@@ -186,7 +183,7 @@ bool checkWin(int player){
     }
 
     if (gameOver){
-        if (vsComputer){
+        if (vsComputer && player == 2){
             printf("Game over! Result: Joshua wins!\n");
             displayBoard();
         } else {
@@ -210,7 +207,7 @@ bool checkTie(){
         }
     }
     if (allFull){
-        printf("Game over! Result: Tie");
+        printf("Game over! Result: Tie!\n");
         gameOver = true;
     }
     return allFull;
