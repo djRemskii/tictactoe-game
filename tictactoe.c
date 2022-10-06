@@ -1,6 +1,8 @@
 //Tic Tac Toe game between 2 players or playervscomputer
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 
 int grid[3][3]; 
 bool gameOver = false;
@@ -17,7 +19,8 @@ void computerTurn();
 
 int main(){
 
-    
+    srand(time(0));
+
     reset();
     displayBoard();
 
@@ -38,9 +41,10 @@ int main(){
         playerTurn(1);
         checkWin(1);
         if (vsComputer && !gameOver){
-            printf("COMPUTER TURN");
+            printf("COMPUTER TURN\n");
+            computerTurn();
         } else if (!gameOver){
-            printf("PLAYER 2 TURN");
+            printf("PLAYER 2 TURN\n");
             playerTurn(2);
             checkWin(2);
         }
@@ -121,6 +125,13 @@ bool playerTurn(int player){
         scanf("%d", &row);
         scanf("%d", &column);
         return spotSelect(row-1, column-1, player);
+}
+
+void computerTurn(){
+    int row = (rand() %(4));
+    int column = (rand() %(4));
+
+    printf("%d %d",row,column);
 }
 
 bool checkWin(int player){
