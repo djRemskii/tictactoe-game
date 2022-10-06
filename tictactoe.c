@@ -11,6 +11,9 @@ bool checkWin();
 void displayBoard();
 char getSymbol();
 
+void playerTurn();
+void computerTurn();
+
 int main(){
 
     
@@ -29,13 +32,9 @@ int main(){
 
     //need while loop for game working
     while (!gameOver){
-        printf("Please choose where to place your piece. (row 1-3, column 1-3)\n");
-        int row;
-        int column;
-        scanf("%d", &row);
-        scanf("%d", &column);
-        spotSelect(row-1, column-1, 1);
-        displayBoard();
+        playerTurn(1);
+        
+
     }
     
 
@@ -93,4 +92,47 @@ char getSymbol(int player){
         } else if (player == 2){
             return 'O';
         }
+}
+
+void playerTurn(int player){
+    printf("Please choose where to place your piece. (row 1-3, column 1-3)\n");
+        int row;
+        int column;
+        scanf("%d", &row);
+        scanf("%d", &column);
+        spotSelect(row-1, column-1, player);
+        displayBoard();
+        checkWin(player);
+}
+
+bool checkWin(int player){
+
+    //check horizontal win (row)
+    for (int i=0; i<3; i++){
+        if (grid[i][0] == grid[i][1] == grid[i][2] == player){
+            gameOver = true;
+        }
+    }
+
+    //check vertical win (column)
+    for (int i=0; i<3; i++){
+        if (grid[0][i] == grid[1][i] == grid[2][i] == player){
+            gameOver = true;
+        }
+    }
+
+    //check diagonal win (top left to bottom right)
+    if (grid[0][0] == grid[1][1] == grid[2][2] == player){
+        gameOver = true;
+    }
+
+    //check diagonal win (bottom left to top right)
+    if (grid[2][0] == grid[1][1] == grid[0][2] == player){
+        gameOver = true;
+    }
+
+    if (gameOver){
+        printf("game over");
+    }
+    return gameOver;
 }
