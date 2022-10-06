@@ -24,7 +24,6 @@ int main(){
     srand(time(0));
 
     reset();
-    displayBoard();
 
 
     //prompt user for game they wish to play (vs human or vs computer)
@@ -63,6 +62,7 @@ int main(){
         }
 
     }
+    
 
     askRestart();
 
