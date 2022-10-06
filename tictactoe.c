@@ -41,8 +41,10 @@ int main(){
         playerTurn(1);
         checkWin(1);
         if (vsComputer && !gameOver){
-            printf("COMPUTER TURN\n");
+            printf("Computer has placed a piece.\n");
             computerTurn();
+            checkWin(2);
+
         } else if (!gameOver){
             printf("PLAYER 2 TURN\n");
             playerTurn(2);
@@ -128,10 +130,18 @@ bool playerTurn(int player){
 }
 
 void computerTurn(){
-    int row = (rand() %(4));
-    int column = (rand() %(4));
-
-    printf("%d %d",row,column);
+    bool validMove = false;
+    while (!validMove){
+        int row = (rand() %(4));
+        int column = (rand() %(4));
+        if (grid[row][column] == 0){
+            grid[row][column] = 2;
+            validMove = true;
+        }
+    }
+    if (!checkWin(2)){
+        displayBoard();
+    }
 }
 
 bool checkWin(int player){
