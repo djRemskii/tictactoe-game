@@ -16,6 +16,8 @@ int main(){
     
     reset();
     displayBoard();
+    spotSelect(1, 1, 1);
+    displayBoard();
 
     //prompt user for game they wish to play (vs human or vs computer)
     printf("Please choose the type of game (input number):\n\t1 - vs human\n\t2 - vs computer\n");
@@ -30,8 +32,8 @@ int main(){
         printf("Please choose where to place your piece. (row 1-3, column 1-3)\n");
         int row;
         int column;
-        row = getchar();
-        column = getchar();
+        scanf("%d", &row);
+        scanf("%d", &column);
         spotSelect(row-1, column-1, 1);
         displayBoard();
     }
