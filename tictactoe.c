@@ -4,6 +4,7 @@
 
 int grid[3][3]; 
 bool gameOver = false;
+bool vsComputer = false;
 
 void reset();
 bool spotSelect();
@@ -25,14 +26,21 @@ int main(){
     printf("Please choose the type of game (input number):\n\t1 - vs human\n\t2 - vs computer\n");
 
     int gameType;
-    gameType = getchar();
+    scanf("%d", &gameType);
+    if (gameType = 2){
+        vsComputer = true;
+    }
 
     putchar(gameType);
 
     //need while loop for game working
     while (!gameOver){
         playerTurn(1);
-        
+        if (vsComputer){
+            
+        } else {
+            playerTurn(2);
+        }
 
     }
     
@@ -60,6 +68,7 @@ void reset (){
         }
     }
     gameOver = false;
+    vsComputer = false;
 }
 
 bool spotSelect(int row, int column, int player){
@@ -95,7 +104,8 @@ char getSymbol(int player){
 }
 
 void playerTurn(int player){
-    printf("Please choose where to place your piece. (row 1-3, column 1-3)\n");
+    printf("Player %d", player);
+    printf(", please choose where to place your piece. (row 1-3, column 1-3)\n");
         int row;
         int column;
         scanf("%d", &row);
