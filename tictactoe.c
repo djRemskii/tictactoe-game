@@ -12,7 +12,7 @@ bool checkWin();
 void displayBoard();
 char getSymbol();
 
-void playerTurn();
+bool playerTurn();
 void computerTurn();
 
 int main(){
@@ -36,11 +36,13 @@ int main(){
     //need while loop for game working
     while (!gameOver){
         playerTurn(1);
+        checkWin(1);
         if (vsComputer && !gameOver){
             printf("COMPUTER TURN");
         } else if (!gameOver){
             printf("PLAYER 2 TURN");
             playerTurn(2);
+            checkWin(2);
         }
 
     }
@@ -73,11 +75,17 @@ void reset (){
 }
 
 bool spotSelect(int row, int column, int player){
-    if (grid[row][column] == 0){
-        grid[row][column] = player;
-        return true;
+    if (0 <= row && row < 3 && 0 <= column && column < 3){
+        if (grid[row][column] == 0){
+            grid[row][column] = player;
+            return true;
+        } else {
+            printf("Place already taken. Please choose another place.\n");
+            playerTurn(player);
+        }
     } else {
-        return false;
+        printf("Place out of bounds. Please choose another place.\n");
+            playerTurn(player);
     }
 }
 
@@ -104,16 +112,15 @@ char getSymbol(int player){
         }
 }
 
-void playerTurn(int player){
+bool playerTurn(int player){
     printf("Player %d", player);
     printf(", please choose where to place your piece. (row 1-3, column 1-3)\n");
+        displayBoard();
         int row;
         int column;
         scanf("%d", &row);
         scanf("%d", &column);
-        spotSelect(row-1, column-1, player);
-        displayBoard();
-        checkWin(player);
+        return spotSelect(row-1, column-1, player);
 }
 
 bool checkWin(int player){
@@ -143,7 +150,8 @@ bool checkWin(int player){
     }
 
     if (gameOver){
-        printf("game over");
+        printf("game over\n");
+        displayBoard();
     }
     return gameOver;
 }
