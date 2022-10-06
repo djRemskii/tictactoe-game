@@ -38,11 +38,11 @@ int main(){
 
     //need while loop for game working
     while (!gameOver){
-        playerTurn(1);
+        computerTurn(1);
         checkWin(1);
         if (vsComputer && !gameOver){
-            printf("Computer has placed a piece.\n");
-            computerTurn();
+            //printf("Computer has placed a piece.\n");
+            computerTurn(2);
             checkWin(2);
 
         } else if (!gameOver){
@@ -129,13 +129,15 @@ bool playerTurn(int player){
         return spotSelect(row-1, column-1, player);
 }
 
-void computerTurn(){
+void computerTurn(int player){
     bool validMove = false;
     while (!validMove){
+        printf("computerattempt)\n");
         int row = (rand() %(4));
         int column = (rand() %(4));
         if (grid[row][column] == 0){
-            grid[row][column] = 2;
+            grid[row][column] = player;
+            printf("Computer has placed a piece.\n");
             validMove = true;
         }
     }
