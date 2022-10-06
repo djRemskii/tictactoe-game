@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 int grid[3][3]; 
+bool gameOver = false;
 
 void reset();
 bool spotSelect();
@@ -24,6 +25,18 @@ int main(){
 
     putchar(gameType);
 
+    //need while loop for game working
+    while (!gameOver){
+        printf("Please choose where to place your piece. (row 1-3, column 1-3)\n");
+        int row;
+        int column;
+        row = getchar();
+        column = getchar();
+        spotSelect(row-1, column-1, 1);
+        displayBoard();
+    }
+    
+
     
     
 
@@ -36,12 +49,6 @@ int main(){
         4. display board
     */
 
-   
-
-    //read information from console
-
-    //asfasdf
-
 
     return 0;
 }
@@ -52,7 +59,6 @@ void reset (){
                 grid[i][j] = 0;
             }
         }
-        printf("grid reset\n");
 }
 
 bool spotSelect(int row, int column, int player){
@@ -65,29 +71,6 @@ bool spotSelect(int row, int column, int player){
 }
 
 void displayBoard(){
-    
-
-    /*
-    printf("+-----------+\n");
-    printf("|");
-    for (int i=0; i<3; i++){
-        printf(getSymbol(grid[0][i]));
-        printf("|");
-    }
-    printf("+-----------+\n");
-    printf("|");
-    for (int i=0; i<3; i++){
-        printf(getSymbol(grid[1][i]));
-        printf("|");
-    }
-    printf("+-----------+\n");
-    printf("|");
-    for (int i=0; i<3; i++){
-        printf(getSymbol(grid[2][i]));
-        printf("|");
-    }
-    */
-
     for (int i=0; i<3; i++){
         printf("+-----+\n");
         printf("|");
@@ -97,7 +80,6 @@ void displayBoard(){
         }
         printf("\n");
     }
-
     printf("+-----+\n");
 }
 
