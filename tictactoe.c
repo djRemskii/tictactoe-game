@@ -35,11 +35,21 @@ int main(){
         vsComputer = true;
     }
 
+    /*
+    for (int i=0; i<100; i++){
+        int row = (rand() %(3));
+        int column = (rand() %(3));
+        printf("%d %d\n",row,column);
+    }
+    */
+        
+
     //putchar(gameType);
 
+    
     //need while loop for game working
     while (!gameOver){
-        computerTurn(1);
+        playerTurn(1);
         checkWin(1);
         checkTie();
         if (vsComputer && !gameOver){
@@ -135,16 +145,16 @@ bool playerTurn(int player){
 void computerTurn(int player){
     bool validMove = false;
     while (!validMove){
-        printf("computerattempt)\n");
-        int row = (rand() %(4));
-        int column = (rand() %(4));
+        printf("computerattempt\n");
+        int row = (rand() %(3));
+        int column = (rand() %(3));
         if (grid[row][column] == 0){
             grid[row][column] = player;
             printf("Computer has placed a piece.\n");
             validMove = true;
         }
     }
-    if (!checkWin(2)){
+    if (!gameOver){
         displayBoard();
     }
 }
@@ -176,8 +186,13 @@ bool checkWin(int player){
     }
 
     if (gameOver){
-        printf("game over\n");
-        displayBoard();
+        if (vsComputer){
+            printf("Game over! Result: Joshua wins!\n");
+            displayBoard();
+        } else {
+            printf("Game over! Result: Player %d wins!\n", player);
+            displayBoard();
+        }
     }
     return gameOver;
 }
