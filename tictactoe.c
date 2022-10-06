@@ -27,18 +27,19 @@ int main(){
 
     int gameType;
     scanf("%d", &gameType);
-    if (gameType = 2){
+    if (gameType == 2){
         vsComputer = true;
     }
 
-    putchar(gameType);
+    //putchar(gameType);
 
     //need while loop for game working
     while (!gameOver){
         playerTurn(1);
-        if (vsComputer){
-            
-        } else {
+        if (vsComputer && !gameOver){
+            printf("COMPUTER TURN");
+        } else if (!gameOver){
+            printf("PLAYER 2 TURN");
             playerTurn(2);
         }
 
