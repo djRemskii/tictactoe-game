@@ -11,6 +11,7 @@ bool vsComputer = false;
 void reset();
 bool spotSelect();
 bool checkWin();
+bool checkTie();
 void displayBoard();
 char getSymbol();
 
@@ -40,15 +41,17 @@ int main(){
     while (!gameOver){
         computerTurn(1);
         checkWin(1);
+        checkTie();
         if (vsComputer && !gameOver){
             //printf("Computer has placed a piece.\n");
             computerTurn(2);
             checkWin(2);
-
+            checkTie();
         } else if (!gameOver){
             printf("PLAYER 2 TURN\n");
             playerTurn(2);
             checkWin(2);
+            checkTie();
         }
 
     }
@@ -177,4 +180,23 @@ bool checkWin(int player){
         displayBoard();
     }
     return gameOver;
+}
+
+bool checkTie(){
+    bool allFull = false;
+    if (!gameOver){
+        allFull = true;
+        for (int i=0; i<3; i++){
+            for (int j=0; j<3; j++){
+                if (grid[i][j] == 0){
+                    allFull = false;
+                }
+            }
+        }
+    }
+    if (allFull){
+        printf("Game over! Result: Tie");
+        gameOver = true;
+    }
+    return allFull;
 }
