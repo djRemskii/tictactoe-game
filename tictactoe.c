@@ -19,8 +19,7 @@ int main(){
     
     reset();
     displayBoard();
-    spotSelect(1, 1, 1);
-    displayBoard();
+
 
     //prompt user for game they wish to play (vs human or vs computer)
     printf("Please choose the type of game (input number):\n\t1 - vs human\n\t2 - vs computer\n");
@@ -55,11 +54,12 @@ int main(){
 }
 
 void reset (){
-        for (int i=0; i<3; i++){
-            for (int j=0; j<3; j++){
-                grid[i][j] = 0;
-            }
+    for (int i=0; i<3; i++){
+        for (int j=0; j<3; j++){
+            grid[i][j] = 0;
         }
+    }
+    gameOver = false;
 }
 
 bool spotSelect(int row, int column, int player){
@@ -109,25 +109,25 @@ bool checkWin(int player){
 
     //check horizontal win (row)
     for (int i=0; i<3; i++){
-        if (grid[i][0] == grid[i][1] == grid[i][2] == player){
+        if (grid[i][0] == player && grid[i][1] == player && grid[i][2] == player){
             gameOver = true;
         }
     }
 
     //check vertical win (column)
     for (int i=0; i<3; i++){
-        if (grid[0][i] == grid[1][i] == grid[2][i] == player){
+        if (grid[0][i] == player && grid[1][i] == player && grid[2][i] == player){
             gameOver = true;
         }
     }
 
     //check diagonal win (top left to bottom right)
-    if (grid[0][0] == grid[1][1] == grid[2][2] == player){
+    if (grid[0][0] == player && grid[1][1] == player && grid[2][2] == player){
         gameOver = true;
     }
 
     //check diagonal win (bottom left to top right)
-    if (grid[2][0] == grid[1][1] == grid[0][2] == player){
+    if (grid[2][0] == player && grid[1][1] == player && grid[0][2] == player){
         gameOver = true;
     }
 
